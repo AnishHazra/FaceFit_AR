@@ -7,34 +7,41 @@
 
 import SwiftUI
 
-// MARK: Input Field
-struct InputField: View {
-    let placeholder: String
-    let icon: String
-    @Binding var text: String
-    var keyboardType: UIKeyboardType = .default
-    var autocapitalization: TextInputAutocapitalization = .sentences
-
-    let brandOrange = Color(red: 0.95, green: 0.38, blue: 0.17)
+// MARK: Filter Selector Cell
+struct FilterSelectorCell: View {
+    let filter: FilterType
+    let isSelected: Bool
+    let action: () -> Void
 
     var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: icon)
-                .foregroundColor(brandOrange)
-                .frame(width: 20)
+        Button(action: action) {
+            VStack(spacing: 6) {
+                ZStack {
+                    Circle()
+                        .fill(isSelected ? Color(red: 0.95, green: 0.38, blue: 0.17) : Color.white.opacity(0.25))
+                        .frame(width: 58, height: 70)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.white, lineWidth: isSelected ? 2.5 : 0)
+                        )
 
-            TextField(placeholder, text: $text)
-                .keyboardType(keyboardType)
-                .textInputAutocapitalization(autocapitalization)
-                .autocorrectionDisabled()
+                    if filter == .none {
+                        Image(systemName: "circle.slash")
+                            .font(.system(size: 26))
+                            .foregroundColor(.white)
+                    } else {
+                        Text(filter.overlayEmoji.prefix(2).map { String($0) }.joined())
+                            .font(.system(size: 26))
+                    }
+                }
+
+                Text(filter.rawValue)
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(.white)
+                    .lineLimit(1)
+            }
         }
-        .padding(.horizontal, 16)
-        .frame(height: 52)
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.separator), lineWidth: 0.5)
-        )
+        .scaleEffect(isSelected ? 1.0 : 1.0)
+        .animation(.spring(response: 0.3), value: isSelected)
     }
 }

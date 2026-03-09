@@ -16,7 +16,7 @@ struct AuthView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
 
-                    // MARK: - Logo Area
+                    // MARK: Logo Area
                     VStack(spacing: 12) {
                         Spacer().frame(height: 60)
 
@@ -41,7 +41,7 @@ struct AuthView: View {
                     }
                     .padding(.bottom, 40)
 
-                    // MARK: - Form
+                    // MARK: Form
                     VStack(spacing: 16) {
 
                         // Name field (sign up only)
@@ -83,7 +83,7 @@ struct AuthView: View {
                     .padding(.horizontal, 28)
                     .animation(.spring(response: 0.35), value: authViewModel.isSignUpMode)
 
-                    // MARK: - Error Message
+                    // MARK: Error Message
                     if authViewModel.showError {
                         HStack(spacing: 8) {
                             Image(systemName: "exclamationmark.circle.fill")
@@ -96,21 +96,7 @@ struct AuthView: View {
                         .transition(.opacity)
                     }
 
-                    // MARK: - Test Hint
-                    if !authViewModel.isSignUpMode {
-                        VStack(spacing: 2) {
-                            Text("Test account:")
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
-                            Text("test@facefit.com  •  Test@1234")
-                                .font(.caption2)
-                                .foregroundColor(brandOrange)
-                                .fontWeight(.medium)
-                        }
-                        .padding(.top, 10)
-                    }
-
-                    // MARK: - Buttons
+                    // MARK: Buttons
                     VStack(spacing: 14) {
 
                         // Primary action button
@@ -174,79 +160,6 @@ struct AuthView: View {
                 }
             }
         }
-    }
-}
-
-// MARK: - Reusable Input Field
-struct InputField: View {
-    let placeholder: String
-    let icon: String
-    @Binding var text: String
-    var keyboardType: UIKeyboardType = .default
-    var autocapitalization: TextInputAutocapitalization = .sentences
-
-    let brandOrange = Color(red: 0.95, green: 0.38, blue: 0.17)
-
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: icon)
-                .foregroundColor(brandOrange)
-                .frame(width: 20)
-            TextField(placeholder, text: $text)
-                .keyboardType(keyboardType)
-                .textInputAutocapitalization(autocapitalization)
-                .autocorrectionDisabled()
-        }
-        .padding(.horizontal, 16)
-        .frame(height: 52)
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.separator), lineWidth: 0.5)
-        )
-    }
-}
-
-// MARK: - Password Field
-struct PasswordField: View {
-    let placeholder: String
-    @Binding var text: String
-    @Binding var show: Bool
-
-    let brandOrange = Color(red: 0.95, green: 0.38, blue: 0.17)
-
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "lock.fill")
-                .foregroundColor(brandOrange)
-                .frame(width: 20)
-            Group {
-                if show {
-                    TextField(placeholder, text: $text)
-                } else {
-                    SecureField(placeholder, text: $text)
-                }
-            }
-            .autocorrectionDisabled()
-            .textInputAutocapitalization(.never)
-
-            Button {
-                show.toggle()
-            } label: {
-                Image(systemName: show ? "eye.slash.fill" : "eye.fill")
-                    .foregroundColor(.secondary)
-                    .font(.system(size: 15))
-            }
-        }
-        .padding(.horizontal, 16)
-        .frame(height: 52)
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.separator), lineWidth: 0.5)
-        )
     }
 }
 

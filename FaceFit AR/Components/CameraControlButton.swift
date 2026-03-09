@@ -7,20 +7,19 @@
 
 import SwiftUI
 
-// MARK: Capture Button
-struct CaptureButton: View {
+// MARK: Camera Control Button
+struct CameraControlButton: View {
+    let icon: String
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            ZStack {
-                Circle()
-                    .stroke(Color.white, lineWidth: 3)
-                    .frame(width: 74, height: 74)
-                Circle()
-                    .fill(Color.white)
-                    .frame(width: 62, height: 62)
-            }
+            Image(systemName: icon)
+                .font(.system(size: 22))
+                .foregroundColor(.white)
+                .frame(width: 55, height: 55)
+                .background(Color.black.opacity(0.35))
+                .clipShape(Circle())
         }
     }
 }

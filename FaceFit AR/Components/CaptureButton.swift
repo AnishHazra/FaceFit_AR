@@ -7,12 +7,20 @@
 
 import SwiftUI
 
+// MARK: Capture Button
 struct CaptureButton: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    let action: () -> Void
 
-#Preview {
-    CaptureButton()
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Circle()
+                    .stroke(Color.white, lineWidth: 3)
+                    .frame(width: 74, height: 74)
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 62, height: 62)
+            }
+        }
+    }
 }
